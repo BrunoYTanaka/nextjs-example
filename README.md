@@ -22,7 +22,6 @@
 | [NextJS](https://nextjs.org/)                            | The React Framework for Production.                                    |
 | [ReactJS](https://reactjs.org/)                          | A JavaScript library for building user interfaces.                     |
 | [Axios](https://redux.js.org/)                           | A Predictable State Container for JS Apps.                             |
-| [React Hook Form](https://react-hook-form.com/)          | Performant, flexible and extensible forms with easy-to-use validation. |
 | [Styled Components](https://styled-components.com/)      | Visual primitives for the component age.                               |
 
 ## 3. Installation & Set Up
