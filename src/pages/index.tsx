@@ -1,93 +1,95 @@
 import React, { useState, useEffect, useCallback, FormEvent } from 'react'
+import useSWR from 'swr'
 import { Title, Form, Repositories, Error } from '../styles/pages/Dashboard'
 import { FiChevronRight } from 'react-icons/fi'
 import api from '../services/api'
 import Link from 'next/link'
 
 interface Repository {
-	description: string
-	full_name: string
-	owner: {
-		login: string
-		avatar_url: string
-	}
+  description: string
+  full_name: string
+  owner: {
+    login: string
+    avatar_url: string
+  }
 }
 
+const getDataLocalStorage = (key: string) => localStorage.getItem(key)
+
 const Dashboard: React.FC = () => {
-	const [newRepo, setNewRepo] = useState('')
-	const [inputError, setInputError] = useState('')
-	const [repositories, setRepositories] = useState<Repository[]>(
-		// () => {
-		//     const storagedRepositories = localStorage.getItem('@GithubExplorer:repositories')
-		//     if (storagedRepositories) {
-		//         return JSON.parse(storagedRepositories)
-		//     } else {
-		//         return []
-		//     }
-		// }
-		[]
-	)
+  const { data } = useSWR('@GithubExplorer:repositories', getDataLocalStorage)
+  const [newRepo, setNewRepo] = useState('')
+  const [inputError, setInputError] = useState('')
+  const [repositories, setRepositories] = useState<Repository[]>([])
 
-	useEffect(() => {
-		localStorage.setItem('@GithubExplorer:repositories', JSON.stringify(repositories))
-	}, [repositories])
+  useEffect(() => {
+    if (data) {
+      setRepositories(JSON.parse(data))
+    } else {
+      setRepositories([])
+    }
+  }, [data])
 
-	const handleAddRepository = useCallback(async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-		event.preventDefault()
+  useEffect(() => {
+    localStorage.setItem('@GithubExplorer:repositories', JSON.stringify(repositories))
+  }, [repositories])
 
-		if (!newRepo) {
-			setInputError('Digite o autor/nome do repositório')
-			return
-		}
+  const handleAddRepository = useCallback(async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault()
 
-		try {
-			const response = await api.get<Repository>(`repos/${newRepo}`)
+    if (!newRepo) {
+      setInputError('Digite o autor/nome do repositório')
+      return
+    }
 
-			setRepositories([...repositories, response.data])
-			setNewRepo('')
-			setInputError('')
+    try {
+      const response = await api.get<Repository>(`repos/${newRepo}`)
 
-		} catch (error) {
-			setInputError('Erro na busca por esse repositório')
-		}
-	}, [newRepo])
+      setRepositories([...repositories, response.data])
+      setNewRepo('')
+      setInputError('')
 
-	return (
-		<>
-			<img src="/logo.svg" alt="" />
-			<Title>Explore respositórios no GitHub</Title>
+    } catch (error) {
+      setInputError('Erro na busca por esse repositório')
+    }
+  }, [newRepo])
 
-			<Form onSubmit={handleAddRepository} hasError={!!inputError}>
-				<input
-					placeholder="Digite o nome do repositório"
-					onChange={e => setNewRepo(e.target.value)
-					}
-					value={newRepo}
-				/>
-				<button type="submit">Pesquisar</button>
-			</Form>
-			{inputError && <Error>{inputError}</Error>}
-			<Repositories>
-				{repositories.map(repository => {
-					return (
-						<Link href={`/repositories/${repository.full_name.replace('/', '-')}`} key={repository.full_name} >
-							<a >
-								<img src={repository.owner.avatar_url} alt={repository.owner.login} />
-								<div>
-									<strong>
-										{repository.full_name}
-									</strong>
-									<p>{repository.description}</p>
-								</div>
-								<FiChevronRight size={20} />
-							</a>
-						</Link>
+  return (
+    <>
+      <img src="/logo.svg" alt="" />
+      <Title>Explore respositórios no GitHub</Title>
 
-					)
-				})}
-			</Repositories>
-		</>
-	)
+      <Form onSubmit={handleAddRepository} hasError={!!inputError}>
+        <input
+          placeholder="Digite o nome do repositório"
+          onChange={e => setNewRepo(e.target.value)
+          }
+          value={newRepo}
+        />
+        <button type="submit">Pesquisar</button>
+      </Form>
+      {inputError && <Error>{inputError}</Error>}
+      <Repositories>
+        {repositories.map(repository => {
+          return (
+            <Link href={`/repositories/${repository.full_name.replace('/', '-')}`} key={repository.full_name} >
+              <a >
+                <img src={repository.owner.avatar_url} alt={repository.owner.login} />
+                <div>
+                  <strong>
+                    {repository.full_name}
+                  </strong>
+                  <p>{repository.description}</p>
+                </div>
+                <FiChevronRight size={20} />
+              </a>
+            </Link>
+
+          )
+        })}
+      </Repositories>
+    </>
+  )
 }
 
 export default Dashboard
