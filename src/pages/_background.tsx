@@ -1,17 +1,20 @@
 import React from 'react'
 import Image from 'next/image'
+import { BgWrapper } from '../styles/pages/Background'
 
-const Background: React.FC = () =>{
-    return (
-        <Image
-          src="/github-background.svg"
-          alt="Background"
-          layout="fill"
-          objectFit="none"
-          quality={100}
-          objectPosition="70% top"
-        />
-    )
+const Background: React.FC = () => {
+  return (
+    <BgWrapper>
+      <Image
+        src="/github-background.svg"
+        alt="Background"
+        layout="fill"
+        objectFit="none"
+        quality={100}
+        objectPosition="70% top"
+      />
+    </BgWrapper>
+  )
 }
 
 export default Background

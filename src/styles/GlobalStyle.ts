@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
     * {
@@ -17,10 +17,13 @@ export default createGlobalStyle`
         font: 16px Roboto, sans-serif;
     }
 
+    .globalWrapper {
+      padding:40px 20px;
+    }
+
     #__next{
         max-width: 960px;
         margin:0 auto;
-        padding:40px 20px;
     }
     button {
         cursor: pointer;

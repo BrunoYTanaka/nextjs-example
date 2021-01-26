@@ -12,42 +12,42 @@ interface RepositoryProps {
 }
 
 interface Repository {
-    full_name: string;
-    description: string;
-    stargazers_count: number;
-    forks_count: number;
-    open_issues_count: number;
+    full_name: string
+    description: string
+    stargazers_count: number
+    forks_count: number
+    open_issues_count: number
     owner: {
-        login: string;
-        avatar_url: string;
-    };
+        login: string
+        avatar_url: string
+    }
 }
 
 interface Issue {
-    id: number;
-    title: string;
-    html_url: string;
+    id: number
+    title: string
+    html_url: string
     user: {
-        login: string;
-    };
+        login: string
+    }
 }
 
 const Repositories: React.FC<RepositoryProps> = ({ repositoryName }: RepositoryProps) => {
-    const [repository, setRepository] = useState<Repository | null>(null);
-    const [issues, setIssues] = useState<Issue[]>([]);
+    const [repository, setRepository] = useState<Repository | null>(null)
+    const [issues, setIssues] = useState<Issue[]>([])
     const router = useRouter()
 
     useEffect(() => {
         const parsedRepositoryName = Array.isArray(repositoryName) ? repositoryName[0].replace('-', '/') : repositoryName.replace('-', '/')
 
         api.get(`repos/${parsedRepositoryName}`).then(response => {
-            setRepository(response.data);
-        });
+            setRepository(response.data)
+        })
 
         api.get(`repos/${parsedRepositoryName}/issues`).then(response => {
-            setIssues(response.data);
-        });
-    }, [router.query]);
+            setIssues(response.data)
+        })
+    }, [router.query])
 
     return (
         <>
@@ -108,10 +108,10 @@ const Repositories: React.FC<RepositoryProps> = ({ repositoryName }: RepositoryP
 export default Repositories
 
 export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ query }) => {
-    const { repositoryName } = query;
+    const { repositoryName } = query
     return {
         props: {
             repositoryName
         },
-    };
+    }
 }
