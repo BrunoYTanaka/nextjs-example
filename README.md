@@ -3,10 +3,14 @@
 # Table of Content
 
 - [Table of Content](#table-of-content)
-  - [1. Folder Structures](#1-folder-structures)
-  - [2. Libraries & Frameworks](#2-libraries--frameworks)
-  - [3. Installation & Set Up](#3-installation--set-up)
-## 1. Folder Structures
+  - [1. About The Projet](#1-about-project)
+  - [2. Folder Structures](#2-folder-structures)
+  - [3. Libraries & Frameworks](#3-libraries--frameworks)
+  - [4. Installation & Set Up](#4-installation--set-up)
+
+## 1. About The Project
+  This project was build with nextJS using the public github api. This is simple add and list github users.
+## 2. Folder Structures
 
 ```bash
 +---pages
@@ -15,7 +19,7 @@
 \---styles
 ```
 
-## 2. Libraries & Frameworks
+## 3. Libraries & Frameworks
 
 | Name                                                     | Description                                                            |
 | -------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -24,7 +28,7 @@
 | [Axios](https://redux.js.org/)                           | A Predictable State Container for JS Apps.                             |
 | [Styled Components](https://styled-components.com/)      | Visual primitives for the component age.                               |
 
-## 3. Installation & Set Up
+## 4. Installation & Set Up
 
 1. Install project dependencies
 
