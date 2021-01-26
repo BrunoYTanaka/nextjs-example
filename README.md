@@ -3,7 +3,7 @@
 # Table of Content
 
 - [Table of Content](#table-of-content)
-  - [1. About The Projet](#1-about-project)
+  - [1. About The Projet](#1-about-the-project)
   - [2. Folder Structures](#2-folder-structures)
   - [3. Libraries & Frameworks](#3-libraries--frameworks)
   - [4. Installation & Set Up](#4-installation--set-up)
