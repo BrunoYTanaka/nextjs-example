@@ -76,6 +76,12 @@ export const RepositoryInfo = styled.section`
   }
 `;
 
+export const Loading = styled.span`
+  margin-top:80px;
+  display:flex;
+  justify-content:center;
+`
+
 export const Issues = styled.div`
   margin-top: 80px;
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, FormEvent } from 'react'
 import useSWR from 'swr'
-import { Title, Form, Repositories, Error } from '../styles/pages/Dashboard'
+import { Title, Form, Repositories, Error, Loading } from '../styles/pages/Dashboard'
 import { FiChevronRight } from 'react-icons/fi'
 import api from '../services/api'
 import Link from 'next/link'
@@ -21,6 +21,7 @@ const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState('')
   const [inputError, setInputError] = useState('')
   const [repositories, setRepositories] = useState<Repository[]>([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (data) {
@@ -42,6 +43,7 @@ const Dashboard: React.FC = () => {
       return
     }
 
+    setLoading(true)
     try {
       const response = await api.get<Repository>(`repos/${newRepo}`)
 
@@ -51,6 +53,8 @@ const Dashboard: React.FC = () => {
 
     } catch (error) {
       setInputError('Erro na busca por esse repositório')
+    } finally {
+      setLoading(false)
     }
   }, [newRepo])
 
@@ -66,7 +70,7 @@ const Dashboard: React.FC = () => {
           }
           value={newRepo}
         />
-        <button type="submit">Pesquisar</button>
+        {loading ? <Loading>Carregando...</Loading> : <button type="submit">Pesquisar</button>}
       </Form>
       {inputError && <Error>{inputError}</Error>}
       <Repositories>
