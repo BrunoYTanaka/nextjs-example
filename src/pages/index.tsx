@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, FormEvent } from 'react'
 import useSWR from 'swr'
-import { Title, Form, Repositories, Error, Loading } from '../styles/pages/Dashboard'
+import { Title, Form, Repositories, Error, Loading } from '../styles/dashboard'
 import { FiChevronRight } from 'react-icons/fi'
 import api from '../services/api'
 import Link from 'next/link'
@@ -60,7 +60,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <img src="/logo.svg" alt="" />
       <Title>Explore respositórios no GitHub</Title>
 
       <Form onSubmit={handleAddRepository} hasError={!!inputError}>

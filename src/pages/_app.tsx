@@ -1,16 +1,15 @@
 import React from 'react'
 import { AppProps } from 'next/app'
-import GlobalStyle from '../styles/GlobalStyle'
-import Background from './_background'
+import GlobalStyle from '../styles/globalStyle'
+import Layout from '../components/Layout'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
-      <GlobalStyle />
-      <Background />
-      <div className="globalWrapper">
+      <Layout>
         <Component {...pageProps} />
-      </div>
+      </Layout>
+      <GlobalStyle />
     </>
   )
 }

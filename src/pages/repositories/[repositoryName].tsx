@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import { Header, RepositoryInfo, Issues, Loading } from '../../styles/pages/Repository'
+import { Header, RepositoryInfo, Issues, Loading } from '../../styles/repository'
 import api from '../../services/api'
 import { GetServerSideProps } from 'next'
+import Layout from '../../components/Layout'
 
 
 interface RepositoryProps {
@@ -52,12 +53,11 @@ const Repositories: React.FC<RepositoryProps> = ({ repositoryName }: RepositoryP
   return (
     <>
       <Header>
-        <img src="/logo.svg" alt="Github Explorer" />
         <Link href="/">
           <a>
             <FiChevronLeft size={16} />
-                        Voltar
-                    </a>
+              Voltar
+          </a>
         </Link>
       </Header>
       {!repository && <Loading>Carregando...</Loading>}

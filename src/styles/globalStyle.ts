@@ -8,23 +8,16 @@ export default createGlobalStyle`
         box-sizing: border-box
     }
 
-    body{
+    body {
         background:#F0F0F5;
         --webkit-font-smoothing: antialiased;
+        background: #F0F0F5 url('/github-background.svg') no-repeat 70% top;
     }
 
     body, input, button{
         font: 16px Roboto, sans-serif;
     }
 
-    .globalWrapper {
-      padding:40px 20px;
-    }
-
-    #__next{
-        max-width: 960px;
-        margin:0 auto;
-    }
     button {
         cursor: pointer;
     }
