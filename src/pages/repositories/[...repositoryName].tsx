@@ -93,9 +93,10 @@ const Repositories: React.FC<RepositoryProps> = ({ repository, issues }: Reposit
 export default Repositories
 
 export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ query }) => {
-  const { repositoryName } = query
 
-  const parsedRepositoryName = Array.isArray(repositoryName) ? repositoryName[0].replace('-', '/') : repositoryName.replace('-', '/')
+  const repositoryName = query.repositoryName as string[]
+
+  const parsedRepositoryName = repositoryName.join('/')
 
   const repository = (await api.get(`repos/${parsedRepositoryName}`)).data
   const issues = (await api.get(`repos/${parsedRepositoryName}/issues`)).data
@@ -103,7 +104,7 @@ export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ 
   return {
     props: {
       repository,
-      issues
+      issues,
     },
   }
 }

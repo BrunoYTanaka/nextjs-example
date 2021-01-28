@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { Container } from './styles'
+import { Container, LoginContainer } from './styles'
 import Link from 'next/link'
 
 const Header: React.FC = () => {
@@ -11,6 +11,15 @@ const Header: React.FC = () => {
           <Image src="/logo.svg" alt="logo" width={215} height={32} />
         </a>
       </Link>
+      <LoginContainer>
+        <Link href="/login">
+          <a>
+            <strong>
+              Fazer Login
+            </strong>
+          </a>
+        </Link>
+      </LoginContainer>
     </Container>
   )
 }
