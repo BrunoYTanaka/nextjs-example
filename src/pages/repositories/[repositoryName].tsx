@@ -9,7 +9,8 @@ import Layout from '../../components/Layout'
 
 
 interface RepositoryProps {
-  repositoryName: string | string[]
+  repository: Repository,
+  issues: Issue[]
 }
 
 interface Repository {
@@ -33,23 +34,7 @@ interface Issue {
   }
 }
 
-const Repositories: React.FC<RepositoryProps> = ({ repositoryName }: RepositoryProps) => {
-  const [repository, setRepository] = useState<Repository | null>(null)
-  const [issues, setIssues] = useState<Issue[]>([])
-  const router = useRouter()
-
-  useEffect(() => {
-    const parsedRepositoryName = Array.isArray(repositoryName) ? repositoryName[0].replace('-', '/') : repositoryName.replace('-', '/')
-
-    api.get(`repos/${parsedRepositoryName}`).then(response => {
-      setRepository(response.data)
-    })
-
-    api.get(`repos/${parsedRepositoryName}/issues`).then(response => {
-      setIssues(response.data)
-    })
-  }, [router.query])
-
+const Repositories: React.FC<RepositoryProps> = ({ repository, issues }: RepositoryProps) => {
   return (
     <>
       <Header>
@@ -96,7 +81,6 @@ const Repositories: React.FC<RepositoryProps> = ({ repositoryName }: RepositoryP
               <strong>{issue.title}</strong>
               <p>{issue.user.login}</p>
             </div>
-
             <FiChevronRight size={20} />
           </a>
         ))}
@@ -110,9 +94,16 @@ export default Repositories
 
 export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ query }) => {
   const { repositoryName } = query
+
+  const parsedRepositoryName = Array.isArray(repositoryName) ? repositoryName[0].replace('-', '/') : repositoryName.replace('-', '/')
+
+  const repository = (await api.get(`repos/${parsedRepositoryName}`)).data
+  const issues = (await api.get(`repos/${parsedRepositoryName}/issues`)).data
+
   return {
     props: {
-      repositoryName
+      repository,
+      issues
     },
   }
 }
