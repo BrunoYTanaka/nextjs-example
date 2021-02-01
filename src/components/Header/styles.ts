@@ -22,9 +22,10 @@ export const LoginContainer = styled.div`
   cursor: pointer;
   transition: 0.2s background-color;
 
-  > a {
+  > div {
+    min-width: 50px;
     color: #000;
-    text-decoration:none;
+    text-align:center;
   }
 
   &:hover{

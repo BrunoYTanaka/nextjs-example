@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Header from '../Header'
 import { Container } from './styles'
 import { useSession } from 'next-auth/client'
+import Redirect from '../Redirect'
 
 const Layout: React.FC = ({ children }) => {
 
-  const [session] = useSession()
+  const [session, loading] = useSession()
 
-  console.log(session)
+  if (!session && !loading) {
+    return (<Redirect to="/login" />)
+  }
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Container>
         {children}
       </Container>
@@ -20,3 +23,4 @@ const Layout: React.FC = ({ children }) => {
 }
 
 export default Layout
+

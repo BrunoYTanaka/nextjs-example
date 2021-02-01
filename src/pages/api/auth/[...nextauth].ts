@@ -26,10 +26,10 @@ const options = {
   pages: {
     signIn: '/login'
   },
-  callbacks:{
-    redirect: async (url, baseUrl) => {
+  callbacks: {
+    redirect: async (url: string, baseUrl: string) => {
       return Promise.resolve(baseUrl)
-    }
+    },
   }
 }
 export default (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, options)
