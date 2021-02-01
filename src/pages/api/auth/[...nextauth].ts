@@ -28,7 +28,7 @@ const options = {
   },
   callbacks: {
     redirect: async (url: string, baseUrl: string) => {
-      return Promise.resolve(baseUrl)
+      return baseUrl
     },
   }
 }

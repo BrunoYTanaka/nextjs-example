@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { signIn } from 'next-auth/client'
 import { Container, Error } from '../styles/login'
 
@@ -18,11 +18,16 @@ export default function SignIn() {
     signIn('credentials', { login })
   }
 
+  const handlechange = (e: ChangeEvent<HTMLInputElement>) => {
+    setLogin(e.target.value)
+    setError('')
+  }
+
   return (
     <Container isErrored={!!error}>
       <form method='post' action='/api/auth/callback/credentials' onSubmit={handleSubmit}>
         <h1>Faça seu login</h1>
-        <input name='login' type='text' onChange={e => setLogin(e.target.value)} placeholder="Login" value={login}/>
+        <input name='login' type='text' onChange={handlechange} placeholder="Login" value={login} />
         {error && (
           <Error>
             {error}

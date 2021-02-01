@@ -9,10 +9,10 @@ export const Container = styled.header`
   justify-content:space-between;
   padding: 30px 40px 20px 40px;
 
-
   > img {
     border-radius:50%
   }
+
 
 `
 
