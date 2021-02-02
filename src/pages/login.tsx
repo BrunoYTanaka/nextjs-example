@@ -7,7 +7,7 @@ export default function SignIn() {
   const [login, setLogin] = useState('')
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!login) {
       setError('Informe um usuário de github')
@@ -15,7 +15,8 @@ export default function SignIn() {
     }
     setError('')
     setLogin('')
-    signIn('credentials', { login })
+    const response = await signIn('credentials', { login })
+    console.log(response)
   }
 
   const handlechange = (e: ChangeEvent<HTMLInputElement>) => {
