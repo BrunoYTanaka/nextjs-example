@@ -4,7 +4,6 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { Header, RepositoryInfo, Issues, Loading } from './styles'
 import api from '../../services/api'
 import { GetServerSideProps } from 'next'
-import { withUser } from '../../hocs/withUser'
 
 interface RepositoryProps {
   repository: Repository,
@@ -84,25 +83,7 @@ const Repositories: React.FC<RepositoryProps> = ({ repository, issues }: Reposit
         ))}
       </Issues>
     </>
-
   )
 }
 
-export default withUser(Repositories)
-
-export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ query }) => {
-
-  const repositoryName = query.repositoryName as string[]
-
-  const parsedRepositoryName = repositoryName.join('/')
-
-  const repository = (await api.get(`repos/${parsedRepositoryName}`)).data
-  const issues = (await api.get(`repos/${parsedRepositoryName}/issues`)).data
-
-  return {
-    props: {
-      repository,
-      issues,
-    },
-  }
-}
+export default Repositories

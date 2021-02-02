@@ -1,8 +1,8 @@
 import React from 'react'
+import { withUser } from '../../hocs/withUser'
 import Header from '../Header'
 import { Container } from './styles'
 
-import { withUser } from '../../hocs/withUser'
 
 const Layout: React.FC = ({ children }) => {
   return (

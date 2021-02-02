@@ -5,11 +5,11 @@ import Loading from '../components/Loading'
 
 
 export const withUser = (Component: React.ComponentType) => {
-  const WrapperComponent: React.FunctionComponent = (): JSX.Element =>{
+  const WrapperComponent: React.FunctionComponent = ({ children }): JSX.Element => {
     const [session, loading] = useSession()
 
     if (loading) {
-      return (<Loading/>)
+      return (<Loading />)
     }
 
     if (!session && !loading) {
@@ -17,7 +17,7 @@ export const withUser = (Component: React.ComponentType) => {
     }
 
     return (
-      <Component />
+      <Component>{children}</Component>
     )
   }
   return WrapperComponent
