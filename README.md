@@ -13,7 +13,10 @@
 ## 2. Folder Structures
 
 ```bash
++---components
++---hocs
 +---pages
+|   \---api
 |   \---repositories
 +---services
 \---styles
@@ -24,6 +27,7 @@
 | Name                                                     | Description                                                            |
 | -------------------------------------------------------- | ---------------------------------------------------------------------- |
 | [NextJS](https://nextjs.org/)                            | The React Framework for Production.                                    |
+| [NextAuth](https://next-auth.js.org/)                    | Authentication for Next.js.                                            |
 | [ReactJS](https://reactjs.org/)                          | A JavaScript library for building user interfaces.                     |
 | [Axios](https://redux.js.org/)                           | A Predictable State Container for JS Apps.                             |
 | [Styled Components](https://styled-components.com/)      | Visual primitives for the component age.                               |
