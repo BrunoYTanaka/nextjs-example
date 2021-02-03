@@ -15,8 +15,7 @@ export default function SignIn() {
     }
     setError('')
     setLogin('')
-    const response = await signIn('credentials', { login })
-    console.log(response)
+    await signIn('credentials', { login })
   }
 
   const handlechange = (e: ChangeEvent<HTMLInputElement>) => {

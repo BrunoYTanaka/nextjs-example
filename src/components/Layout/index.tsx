@@ -1,5 +1,5 @@
 import React from 'react'
-import { withUser } from '../../hocs/withUser'
+import { WithAuth } from '../../hocs/withAuth'
 import Header from '../Header'
 import { Container } from './styles'
 
@@ -15,5 +15,4 @@ const Layout: React.FC = ({ children }) => {
   )
 }
 
-export default withUser(Layout)
-
+export default WithAuth(Layout)

@@ -2,12 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { Header, RepositoryInfo, Issues, Loading } from './styles'
-import api from '../../services/api'
-import { GetServerSideProps } from 'next'
-
 interface RepositoryProps {
-  repository: Repository,
-  issues: Issue[]
+  data: {
+    repository: Repository,
+    issues: Issue[]
+  }
 }
 
 interface Repository {
@@ -31,7 +30,8 @@ interface Issue {
   }
 }
 
-const Repositories: React.FC<RepositoryProps> = ({ repository, issues }: RepositoryProps) => {
+const Repositories: React.FC<RepositoryProps> = ({ data }: RepositoryProps) => {
+  const { repository, issues } = data
   return (
     <>
       <Header>

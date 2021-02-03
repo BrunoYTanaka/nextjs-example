@@ -1,11 +1,21 @@
-import { GetServerSideProps } from 'next'
 import React from 'react'
 import Repositories from '../../components/Repositories'
 import api from '../../services/api'
+import { WithAuth } from '../../hocs/withAuth'
+import { withAuthServerSideProps } from '../../hocs/withAuthServerSideProps'
+interface IUser {
+  name: string
+  email?: string
+  image?: string
+}
 
 interface RepositoryProps {
-  repository: Repository,
-  issues: Issue[]
+  children: React.ReactNode,
+  user: IUser
+  data: {
+    repository: Repository,
+    issues: Issue[]
+  }
 }
 interface Repository {
   full_name: string
@@ -29,16 +39,16 @@ interface Issue {
 }
 
 
-const RepositoriesPage = (props: RepositoryProps) => {
+const RepositoriesPage: React.FC = (props: RepositoryProps) => {
   return (
     <Repositories {...props} />
   )
 }
 
-export default RepositoriesPage
+export default WithAuth(RepositoriesPage)
 
-export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ query }) => {
 
+const getRepositoryAndIssues = async ({ query }) => {
   const repositoryName = query.repositoryName as string[]
 
   const parsedRepositoryName = repositoryName.join('/')
@@ -47,9 +57,9 @@ export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ 
   const issues = (await api.get(`repos/${parsedRepositoryName}/issues`)).data
 
   return {
-    props: {
-      repository,
-      issues,
-    },
+    repository,
+    issues,
   }
 }
+
+export const getServerSideProps = withAuthServerSideProps(getRepositoryAndIssues)
