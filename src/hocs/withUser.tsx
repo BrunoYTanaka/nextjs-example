@@ -1,25 +1,21 @@
-import React from 'react'
+import React, { ComponentType } from 'react'
 import { useSession } from 'next-auth/client'
 import Redirect from '../components/Redirect'
 import Loading from '../components/Loading'
 
-
-export const withUser = (Component: React.ComponentType) => {
-  const WrapperComponent: React.FunctionComponent = (): JSX.Element =>{
+export const withUser = (Component: ComponentType): ComponentType => {
+  const WrapperComponent: React.FunctionComponent = () => {
     const [session, loading] = useSession()
 
     if (loading) {
-      return (<Loading/>)
+      return <Loading />
     }
 
     if (!session && !loading) {
-      return (<Redirect to="/login" />)
+      return <Redirect to="/login" />
     }
 
-    return (
-      <Component />
-    )
+    return <Component />
   }
   return WrapperComponent
 }
-

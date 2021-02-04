@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import { Header, RepositoryInfo, Issues, Loading } from './styles'
-import api from '../../services/api'
 import { GetServerSideProps } from 'next'
+import { Header, RepositoryInfo, Issues, Loading } from './styles'
 import { withUser } from '../../hocs/withUser'
+import api from '../../services/api'
 
 interface RepositoryProps {
-  repository: Repository,
+  repository: Repository
   issues: Issue[]
 }
 
@@ -32,14 +32,17 @@ interface Issue {
   }
 }
 
-const Repositories: React.FC<RepositoryProps> = ({ repository, issues }: RepositoryProps) => {
+const Repositories: React.FC<RepositoryProps> = ({
+  repository,
+  issues,
+}: RepositoryProps) => {
   return (
     <>
       <Header>
         <Link href="/">
           <a>
             <FiChevronLeft size={16} />
-              Voltar
+            Voltar
           </a>
         </Link>
       </Header>
@@ -84,14 +87,14 @@ const Repositories: React.FC<RepositoryProps> = ({ repository, issues }: Reposit
         ))}
       </Issues>
     </>
-
   )
 }
 
 export default withUser(Repositories)
 
-export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({ query }) => {
-
+export const getServerSideProps: GetServerSideProps<RepositoryProps> = async ({
+  query,
+}) => {
   const repositoryName = query.repositoryName as string[]
 
   const parsedRepositoryName = repositoryName.join('/')

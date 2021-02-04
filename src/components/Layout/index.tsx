@@ -8,12 +8,9 @@ const Layout: React.FC = ({ children }) => {
   return (
     <>
       <Header />
-      <Container>
-        {children}
-      </Container>
+      <Container>{children}</Container>
     </>
   )
 }
 
 export default withUser(Layout)
-

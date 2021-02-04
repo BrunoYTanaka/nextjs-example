@@ -1,11 +1,10 @@
 import React from 'react'
 import { LoadingContainer, DotsLoading } from './styles'
 
-const Loading = () => {
+const Loading: React.FC = () => {
   return (
     <LoadingContainer>
-      <DotsLoading>
-      </DotsLoading>
+      <DotsLoading />
     </LoadingContainer>
   )
 }

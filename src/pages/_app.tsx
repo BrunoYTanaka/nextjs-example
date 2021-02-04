@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
 import { AppProps } from 'next/app'
+import { Provider } from 'next-auth/client'
 import GlobalStyle from '../styles/globalStyle'
 import Layout from '../components/Layout'
-import { Provider } from 'next-auth/client'
-
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const { session } = pageProps

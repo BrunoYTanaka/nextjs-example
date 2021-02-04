@@ -1,20 +1,18 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 interface RedirectProps {
   to: string
 }
 
-const Redirect = ({ to }: RedirectProps) => {
-
+const Redirect: React.FC<RedirectProps> = ({ to }) => {
   const router = useRouter()
 
   useEffect(() => {
     router.push(to)
-  }, [to])
+  }, [router, to])
 
   return null
 }
 
 export default Redirect
-

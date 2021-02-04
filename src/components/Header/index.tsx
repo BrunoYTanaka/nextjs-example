@@ -1,11 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
-import { Container, LoginContainer } from './styles'
 import Link from 'next/link'
 import { signOut } from 'next-auth/client'
+import { Container, LoginContainer } from './styles'
 
 const Header: React.FC = () => {
-
   const handleLogout = () => {
     signOut()
   }
@@ -18,9 +17,7 @@ const Header: React.FC = () => {
         </a>
       </Link>
       <LoginContainer onClick={handleLogout}>
-        <div >
-          Sair
-        </div>
+        <div>Sair</div>
       </LoginContainer>
     </Container>
   )

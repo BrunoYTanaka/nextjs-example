@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, FormEvent } from 'react'
 import useSWR from 'swr'
-import { Title, Form, Repositories, Error, Loading } from './styles'
 import { FiChevronRight } from 'react-icons/fi'
-import api from '../../services/api'
 import Link from 'next/link'
+import { Title, Form, Repositories, Error, Loading } from './styles'
+import api from '../../services/api'
 
 interface Repository {
   description: string
@@ -32,31 +32,36 @@ const Dashboard: React.FC = () => {
   }, [data])
 
   useEffect(() => {
-    localStorage.setItem('@GithubExplorer:repositories', JSON.stringify(repositories))
+    localStorage.setItem(
+      '@GithubExplorer:repositories',
+      JSON.stringify(repositories),
+    )
   }, [repositories])
 
-  const handleAddRepository = useCallback(async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-    event.preventDefault()
+  const handleAddRepository = useCallback(
+    async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+      event.preventDefault()
 
-    if (!newRepo) {
-      setInputError('Digite o autor/nome do repositório')
-      return
-    }
+      if (!newRepo) {
+        setInputError('Digite o autor/nome do repositório')
+        return
+      }
 
-    setLoading(true)
-    try {
-      const response = await api.get<Repository>(`repos/${newRepo}`)
+      setLoading(true)
+      try {
+        const response = await api.get<Repository>(`repos/${newRepo}`)
 
-      setRepositories([...repositories, response.data])
-      setNewRepo('')
-      setInputError('')
-
-    } catch (error) {
-      setInputError('Erro na busca por esse repositório')
-    } finally {
-      setLoading(false)
-    }
-  }, [newRepo])
+        setRepositories([...repositories, response.data])
+        setNewRepo('')
+        setInputError('')
+      } catch (error) {
+        setInputError('Erro na busca por esse repositório')
+      } finally {
+        setLoading(false)
+      }
+    },
+    [newRepo, repositories],
+  )
 
   return (
     <>
@@ -64,23 +69,30 @@ const Dashboard: React.FC = () => {
       <Form onSubmit={handleAddRepository} hasError={!!inputError}>
         <input
           placeholder="Digite o nome do repositório"
-          onChange={e => setNewRepo(e.target.value)
-          }
+          onChange={e => setNewRepo(e.target.value)}
           value={newRepo}
         />
-        {loading ? <Loading>Carregando...</Loading> : <button type="submit">Pesquisar</button>}
+        {loading ? (
+          <Loading>Carregando...</Loading>
+        ) : (
+          <button type="submit">Pesquisar</button>
+        )}
       </Form>
       {inputError && <Error>{inputError}</Error>}
       <Repositories>
         {repositories.map(repository => {
           return (
-            <Link href={`/repositories/${repository.full_name}`} key={repository.full_name} >
-              <a >
-                <img src={repository.owner.avatar_url} alt={repository.owner.login} />
+            <Link
+              href={`/repositories/${repository.full_name}`}
+              key={repository.full_name}
+            >
+              <a>
+                <img
+                  src={repository.owner.avatar_url}
+                  alt={repository.owner.login}
+                />
                 <div>
-                  <strong>
-                    {repository.full_name}
-                  </strong>
+                  <strong>{repository.full_name}</strong>
                   <p>{repository.description}</p>
                 </div>
                 <FiChevronRight size={20} />
