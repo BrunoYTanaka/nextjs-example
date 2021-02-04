@@ -3,8 +3,8 @@ import { useSession } from 'next-auth/client'
 import Redirect from '../components/Redirect'
 import Loading from '../components/Loading'
 
-export const withUser = (Component: ComponentType): ComponentType => {
-  const WrapperComponent: React.FunctionComponent = () => {
+export const withUser = (Component: ComponentType) => {
+  const WrapperComponent: React.FC = () => {
     const [session, loading] = useSession()
 
     if (loading) {
@@ -14,6 +14,8 @@ export const withUser = (Component: ComponentType): ComponentType => {
     if (!session && !loading) {
       return <Redirect to="/login" />
     }
+
+    console.log(Component)
 
     return <Component />
   }

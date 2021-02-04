@@ -26,6 +26,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+      "jsx-a11y/anchor-is-valid":"off",
       "space-before-function-paren":"off",
       "camelcase": "off",
       "react/prop-types":"off",
