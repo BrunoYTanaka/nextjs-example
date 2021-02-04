@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useCallback, MouseEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { signOut } from 'next-auth/client'
 import { Container, LoginContainer } from './styles'
 
 const Header: React.FC = () => {
-  const handleLogout = () => {
+  const handleLogout = useCallback((e: MouseEvent) => {
+    e.preventDefault()
     signOut()
-  }
+  }, [])
 
   return (
     <Container>

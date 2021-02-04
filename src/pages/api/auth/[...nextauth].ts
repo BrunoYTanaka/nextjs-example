@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
+import api from '../../../services/api'
 
 const options = {
   providers: [
@@ -16,8 +16,8 @@ const options = {
       },
       authorize: async credentials => {
         const { login } = credentials
-        return axios
-          .get(`https://api.github.com/users/${login}`)
+        return api
+          .get(`/users/${login}`)
           .then(response => {
             return response.data
           })
