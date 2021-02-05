@@ -8,13 +8,10 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
-  align-content: center;
   justify-content: center;
   height: 100vh;
 
   form {
-    display: flex;
-    flex-direction: column;
     margin: 0 auto;
     min-width: 500px;
     h1 {
@@ -60,4 +57,20 @@ export const Container = styled.div<ContainerProps>`
 export const Error = styled.span`
   height: 20px;
   color: #c53030;
+`
+
+export const Loading = styled.div`
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #8c8cb5;
+  height: 56px;
+  border-radius: 10px;
+  border: 0;
+  color: #312e38;
+  width: 100%;
+  margin-top: 16px;
+  font-weight: 500;
 `

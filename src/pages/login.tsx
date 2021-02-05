@@ -1,20 +1,22 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { signIn } from 'next-auth/client'
-import { Container, Error } from '../styles/login'
+import { Container, Error, Loading } from '../styles/login'
 
 const SignIn: React.FC = () => {
   const [login, setLogin] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (!login) {
       setError('Informe um usuário de github')
       return
     }
+    setIsLoading(true)
     setError('')
     setLogin('')
-    await signIn('credentials', { login })
+    signIn('credentials', { login })
   }
 
   const handlechange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +40,13 @@ const SignIn: React.FC = () => {
           value={login}
         />
         {error && <Error>{error}</Error>}
-        <button type="submit">Sign in</button>
+        {isLoading ? (
+          <Loading>
+            <span>Carregando...</span>
+          </Loading>
+        ) : (
+          <button type="submit">Sign in</button>
+        )}
       </form>
     </Container>
   )
