@@ -1,7 +1,7 @@
 import React from 'react'
+import { GetServerSidePropsContext } from 'next'
 import Repositories from '../../components/Repositories'
 import api from '../../services/api'
-import { WithAuth } from '../../hocs/withAuth'
 import { withAuthServerSideProps } from '../../hocs/withAuthServerSideProps'
 
 interface IUser {
@@ -43,9 +43,9 @@ const RepositoriesPage: React.FC = (props: RepositoryProps) => {
   return <Repositories {...props} />
 }
 
-export default WithAuth(RepositoriesPage)
+export default RepositoriesPage
 
-const getRepositoryAndIssues = async ({ query }) => {
+const getRepositoryAndIssues = async ({ query }: GetServerSidePropsContext) => {
   const repositoryName = query.repositoryName as string[]
 
   const parsedRepositoryName = repositoryName.join('/')

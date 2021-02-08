@@ -3,7 +3,6 @@ import { WithAuth } from '../../hocs/withAuth'
 import Header from '../Header'
 import { Container } from './styles'
 
-
 const Layout: React.FC = ({ children }) => {
   return (
     <>
