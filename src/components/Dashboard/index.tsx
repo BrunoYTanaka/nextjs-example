@@ -1,11 +1,34 @@
-import React, { useState, useEffect, useCallback, FormEvent } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  FormEvent,
+  forwardRef,
+  createRef,
+  useMemo,
+} from 'react'
 import useSWR from 'swr'
 import { FiChevronRight } from 'react-icons/fi'
-import Link from 'next/link'
+import NextLink, { LinkProps } from 'next/link'
 import { Title, Form, Repositories, Error, Loading } from './styles'
 import api from '../../services/api'
 
+interface IProps extends LinkProps {
+  children: React.ReactNode
+  href: string
+}
+const Link = forwardRef<HTMLAnchorElement, IProps>(
+  ({ children, href, ...rest }: IProps, ref) => (
+    <NextLink href={href}>
+      <a ref={ref} {...rest}>
+        {children}
+      </a>
+    </NextLink>
+  ),
+)
+
 interface Repository {
+  id: number
   description: string
   full_name: string
   owner: {
@@ -22,6 +45,13 @@ const Dashboard: React.FC = () => {
   const [inputError, setInputError] = useState('')
   const [repositories, setRepositories] = useState<Repository[]>([])
   const [loading, setLoading] = useState(false)
+
+  const [hasNewElement, setHasNewElement] = useState(false)
+
+  const refs = useMemo(
+    () => repositories.map(() => createRef<HTMLAnchorElement>()),
+    [repositories],
+  )
 
   useEffect(() => {
     if (data) {
@@ -54,6 +84,7 @@ const Dashboard: React.FC = () => {
         setRepositories([...repositories, response.data])
         setNewRepo('')
         setInputError('')
+        setHasNewElement(true)
       } catch (error) {
         setInputError('Erro na busca por esse repositório')
       } finally {
@@ -62,6 +93,16 @@ const Dashboard: React.FC = () => {
     },
     [newRepo, repositories],
   )
+
+  useEffect(() => {
+    if (hasNewElement && refs[refs.length - 1].current) {
+      refs[refs.length - 1].current.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+      })
+      setHasNewElement(false)
+    }
+  }, [refs, hasNewElement])
 
   return (
     <>
@@ -80,23 +121,22 @@ const Dashboard: React.FC = () => {
       </Form>
       {inputError && <Error>{inputError}</Error>}
       <Repositories>
-        {repositories.map(repository => {
+        {repositories.map((repository, index) => {
           return (
             <Link
+              ref={refs[index]}
               href={`/repositories/${repository.full_name}`}
               key={repository.full_name}
             >
-              <a>
-                <img
-                  src={repository.owner.avatar_url}
-                  alt={repository.owner.login}
-                />
-                <div>
-                  <strong>{repository.full_name}</strong>
-                  <p>{repository.description}</p>
-                </div>
-                <FiChevronRight size={20} />
-              </a>
+              <img
+                src={repository.owner.avatar_url}
+                alt={repository.owner.login}
+              />
+              <div>
+                <strong>{repository.full_name}</strong>
+                <p>{repository.description}</p>
+              </div>
+              <FiChevronRight size={20} />
             </Link>
           )
         })}
