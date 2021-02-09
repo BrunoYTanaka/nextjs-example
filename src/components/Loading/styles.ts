@@ -1,17 +1,15 @@
 import styled, { keyframes } from 'styled-components'
 
-
 export const LoadingContainer = styled.div`
   height: 100vh;
   max-width: 960px;
 
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
 
   margin: 0 auto;
-  text-align:center;
-
+  text-align: center;
 `
 
 const dots = keyframes`
@@ -40,9 +38,8 @@ export const DotsLoading = styled.div`
   font: 300 8em/150% Impact;
   color: black;
 
-  &::after{
+  &::after {
     content: '.';
     animation: ${dots} 1s steps(5, end) infinite;
- }
+  }
 `
-

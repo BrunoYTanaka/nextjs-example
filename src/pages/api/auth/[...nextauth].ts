@@ -22,6 +22,7 @@ const options = {
             return response.data
           })
           .catch(error => {
+            // eslint-disable-next-line no-console
             console.error('AUTH ERROR: ', error)
             return null
           })

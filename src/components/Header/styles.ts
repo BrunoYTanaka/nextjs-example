@@ -1,19 +1,16 @@
 import { shade } from 'polished'
 import styled from 'styled-components'
 
-
 export const Container = styled.header`
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 30px 40px 20px 40px;
 
   > img {
-    border-radius:50%
+    border-radius: 50%;
   }
-
-
 `
 
 export const LoginContainer = styled.div`
@@ -25,10 +22,10 @@ export const LoginContainer = styled.div`
   > div {
     min-width: 50px;
     color: #000;
-    text-align:center;
+    text-align: center;
   }
 
-  &:hover{
+  &:hover {
     background: ${shade(0.2, '#fff')};
   }
 `

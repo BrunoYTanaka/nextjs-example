@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Header = styled.header`
   display: flex;
   align-items: center;
-  flex-direction:row-reverse;
+  flex-direction: row-reverse;
 
   a {
     display: flex;
@@ -20,7 +20,7 @@ export const Header = styled.header`
       margin-right: 4px;
     }
   }
-`;
+`
 
 export const RepositoryInfo = styled.section`
   margin-top: 80px;
@@ -74,12 +74,12 @@ export const RepositoryInfo = styled.section`
       }
     }
   }
-`;
+`
 
 export const Loading = styled.span`
-  margin-top:80px;
-  display:flex;
-  justify-content:center;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
 `
 
 export const Issues = styled.div`
@@ -126,4 +126,4 @@ export const Issues = styled.div`
       color: #cbcbd6;
     }
   }
-`;
+`
