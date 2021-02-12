@@ -6,7 +6,6 @@ import React, {
   forwardRef,
   createRef,
   useMemo,
-  Fragment,
 } from 'react'
 import useSWR from 'swr'
 import { FiChevronRight, FiXCircle } from 'react-icons/fi'
@@ -75,6 +74,11 @@ const Dashboard: React.FC = () => {
 
       if (!newRepo) {
         setInputError('Digite o autor/nome do repositório')
+        return
+      }
+
+      if (repositories.find(repo => repo.full_name === newRepo)) {
+        setInputError('Repositório já adicionado')
         return
       }
 
