@@ -6,9 +6,10 @@ import React, {
   forwardRef,
   createRef,
   useMemo,
+  Fragment,
 } from 'react'
 import useSWR from 'swr'
-import { FiChevronRight } from 'react-icons/fi'
+import { FiChevronRight, FiXCircle } from 'react-icons/fi'
 import NextLink, { LinkProps } from 'next/link'
 import { Title, Form, Repositories, Error, Loading } from './styles'
 import api from '../../services/api'
@@ -94,6 +95,17 @@ const Dashboard: React.FC = () => {
     [newRepo, repositories],
   )
 
+  const handleRemoveRepository = useCallback(
+    (repository: Repository) => {
+      const newRepositories = repositories.filter(
+        repo => repo.id !== repository.id,
+      )
+
+      setRepositories(newRepositories)
+    },
+    [repositories],
+  )
+
   useEffect(() => {
     if (hasNewElement && refs[refs.length - 1].current) {
       refs[refs.length - 1].current.scrollIntoView({
@@ -123,21 +135,28 @@ const Dashboard: React.FC = () => {
       <Repositories>
         {repositories.map((repository, index) => {
           return (
-            <Link
-              ref={refs[index]}
-              href={`/repositories/${repository.full_name}`}
-              key={repository.full_name}
-            >
-              <img
-                src={repository.owner.avatar_url}
-                alt={repository.owner.login}
-              />
-              <div>
-                <strong>{repository.full_name}</strong>
-                <p>{repository.description}</p>
-              </div>
-              <FiChevronRight size={20} />
-            </Link>
+            <div key={repository.full_name}>
+              <button
+                type="button"
+                onClick={() => handleRemoveRepository(repository)}
+              >
+                <FiXCircle />
+              </button>
+              <Link
+                ref={refs[index]}
+                href={`/repositories/${repository.full_name}`}
+              >
+                <img
+                  src={repository.owner.avatar_url}
+                  alt={repository.owner.login}
+                />
+                <div>
+                  <strong>{repository.full_name}</strong>
+                  <p>{repository.description}</p>
+                </div>
+                <FiChevronRight size={20} />
+              </Link>
+            </div>
           )
         })}
       </Repositories>

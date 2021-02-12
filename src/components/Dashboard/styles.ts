@@ -78,50 +78,70 @@ export const Repositories = styled.div`
   margin-top: 80px;
   max-width: 700px;
 
-  a {
-    background: #fff;
-    border-radius: 5px;
-    width: 100%;
-    padding: 24px;
-    display: block;
-    text-decoration: none;
-
+  div {
+    margin-bottom: 16px;
     display: flex;
-    align-items: center;
-    transition: transform 0.2s;
 
-    & + a {
-      margin-top: 16px;
+    &:hover > a {
+      transform: translateX(32px);
+    }
+    &:hover > button {
+      z-index: 1;
     }
 
-    &:hover {
-      transform: translateX(10px);
+    position: relative;
+
+    button {
+      position: absolute;
+      width: 32px;
+      height: 100%;
+      justify-content: flex-start;
+      background: red;
+      border: 0;
+      border-radius: 5px 0 0 5px;
+      z-index: -1;
     }
 
-    img {
-      width: 64px;
-      height: 64px;
+    a {
+      background: #fff;
+      border-radius: 5px;
+      width: 100%;
+      padding: 24px 26px;
+      display: block;
+      text-decoration: none;
 
-      border-radius: 50%;
-    }
+      display: flex;
+      align-items: center;
+      transition: transform 0.2s;
 
-    div {
-      margin: 0 16px;
-      flex: 1 strong {
-        font-size: 20px;
-        color: #3d3d4d;
+      img {
+        width: 64px;
+        height: 64px;
+
+        border-radius: 50%;
       }
 
-      p {
-        font-size: 18px;
-        color: #a8a8b3;
-        margin-top: 4px;
-      }
-    }
+      div {
+        display: flex;
+        flex-direction: column;
+        margin: 0 16px;
+        flex: 1;
+        strong {
+          font-size: 20px;
+          color: #3d3d4d;
+        }
 
-    svg {
-      margin-left: auto;
-      color: #cbcbd6;
+        p {
+          font-size: 18px;
+          color: #a8a8b3;
+          margin-top: 4px;
+        }
+      }
+
+      svg {
+        margin-left: auto;
+        color: #cbcbd6;
+      }
     }
   }
 `
