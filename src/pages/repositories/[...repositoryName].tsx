@@ -10,15 +10,15 @@ interface IUser {
   image?: string
 }
 
-interface RepositoryProps {
+interface IRepositoryProps {
   children: React.ReactNode
   user: IUser
   data: {
-    repository: Repository
-    issues: Issue[]
+    repository: IRepository
+    issues: IIssue[]
   }
 }
-interface Repository {
+interface IRepository {
   full_name: string
   description: string
   stargazers_count: number
@@ -30,7 +30,7 @@ interface Repository {
   }
 }
 
-interface Issue {
+interface IIssue {
   id: number
   title: string
   html_url: string
@@ -39,20 +39,24 @@ interface Issue {
   }
 }
 
-const RepositoriesPage: React.FC = (props: RepositoryProps) => {
+const RepositoriesPage: React.FC = (props: IRepositoryProps) => {
   return <Repositories {...props} />
 }
 
 export default RepositoriesPage
 
-const getRepositoryAndIssues = async ({ query }: GetServerSidePropsContext) => {
+const getRepositoryAndIssues = async ({
+  query,
+}: GetServerSidePropsContext): Promise<{
+  repository: IRepository
+  issues: IIssue[]
+}> => {
   const repositoryName = query.repositoryName as string[]
 
   const parsedRepositoryName = repositoryName.join('/')
 
   const repository = (await api.get(`repos/${parsedRepositoryName}`)).data
   const issues = (await api.get(`repos/${parsedRepositoryName}/issues`)).data
-
   return {
     repository,
     issues,

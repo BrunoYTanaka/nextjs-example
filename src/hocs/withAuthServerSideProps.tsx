@@ -11,9 +11,11 @@ interface IResult {
   data?: unknown
 }
 
-export const withAuthServerSideProps = (
-  // eslint-disable-next-line no-unused-vars
-  getServerSidePropsFunc?: (c: GetServerSidePropsContext) => unknown,
+export const withAuthServerSideProps = <T,>(
+  getServerSidePropsFunc?: (
+    // eslint-disable-next-line no-unused-vars
+    c: GetServerSidePropsContext,
+  ) => Promise<T | IResult>,
 ) => {
   return async (
     context: GetServerSidePropsContext,
@@ -28,8 +30,22 @@ export const withAuthServerSideProps = (
       }
     }
     const { user } = session
+
     if (getServerSidePropsFunc) {
-      return { props: { user, data: await getServerSidePropsFunc(context) } }
+      return getServerSidePropsFunc(context)
+        .then(response => {
+          return {
+            props: {
+              user,
+              data: response,
+            },
+          }
+        })
+        .catch(() => {
+          return {
+            notFound: true,
+          }
+        })
     }
     return { props: { user } }
   }
